@@ -53,15 +53,7 @@ const VENDORS = [
 ];
 
 
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-};
-
-export const metadata = {
-  title: "Vendor Page",
-  description: "Browse vendors on Eventra",
-};
+// ...existing code...
 
 function VendorContent() {
   const searchParams = useSearchParams();
