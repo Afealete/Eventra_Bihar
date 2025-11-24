@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 // Customer Vendor Detail page moved from app/vendor/page.tsx
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -51,7 +52,18 @@ const VENDORS = [
   },
 ];
 
-export default function CustomerVendor() {
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+export const metadata = {
+  title: "Vendor Page",
+  description: "Browse vendors on Eventra",
+};
+
+function VendorContent() {
   const searchParams = useSearchParams();
   const idParam = searchParams?.get("id");
   const vendorId = idParam ? parseInt(idParam, 10) : 1;
@@ -264,5 +276,13 @@ export default function CustomerVendor() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function CustomerVendorPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VendorContent />
+    </Suspense>
   );
 }
