@@ -127,6 +127,7 @@ export default function VendorBookings() {
 
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={() => setView("list")}
                 className={`px-3 py-2 rounded ${
                   view === "list"
@@ -137,6 +138,7 @@ export default function VendorBookings() {
                 List
               </button>
               <button
+                type="button"
                 onClick={() => setView("grid")}
                 className={`px-3 py-2 rounded ${
                   view === "grid"
@@ -147,6 +149,7 @@ export default function VendorBookings() {
                 Grid
               </button>
               <button
+                type="button"
                 onClick={() => setView("calendar")}
                 className={`px-3 py-2 rounded ${
                   view === "calendar"
@@ -184,18 +187,21 @@ export default function VendorBookings() {
                   </div>
                   <div className="flex gap-2">
                     <button
+                      type="button"
                       onClick={() => bulkChangeStatus("Confirmed")}
                       className="px-3 py-1 bg-[#8B000F] text-white rounded"
                     >
                       Mark Confirmed
                     </button>
                     <button
+                      type="button"
                       onClick={() => bulkChangeStatus("Completed")}
                       className="px-3 py-1 bg-[#FF6F3C] text-white rounded"
                     >
                       Mark Complete
                     </button>
                     <button
+                      type="button"
                       onClick={() => setSelected([])}
                       className="px-3 py-1 bg-white border"
                     >
@@ -248,6 +254,7 @@ export default function VendorBookings() {
                       <div className="flex gap-2">
                         {b.status !== "Confirmed" && (
                           <button
+                            type="button"
                             onClick={() =>
                               handleChangeStatus(b.id, "Confirmed")
                             }
@@ -258,6 +265,7 @@ export default function VendorBookings() {
                         )}
                         {b.status !== "Completed" && (
                           <button
+                            type="button"
                             onClick={() =>
                               handleChangeStatus(b.id, "Completed")
                             }
@@ -266,7 +274,10 @@ export default function VendorBookings() {
                             Complete
                           </button>
                         )}
-                        <button className="px-3 py-1 bg-white border rounded">
+                        <button
+                          type="button"
+                          className="px-3 py-1 bg-white border rounded"
+                        >
                           Details
                         </button>
                       </div>

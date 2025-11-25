@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import AdminSidebar from "../../../components/AdminSidebar";
 import {
   ResponsiveContainer,
   BarChart,
@@ -115,184 +114,243 @@ export default function AdminDashboard() {
     (u.name + u.email + u.role).toLowerCase().includes(search.toLowerCase())
   );
 
+  const downloadBookingsCSV = () => {
+    const rows = [
+      ["id", "customer", "vendor", "date", "amount", "status"],
+      ...bookings.map((b) => [
+        b.id,
+        b.customer,
+        b.vendor,
+        b.date,
+        b.amount.replace(/[₹,]/g, ""),
+        b.status,
+      ]),
+    ];
+    const csv = rows
+      .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "bookings.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
-          <div className="md:col-span-1">
-            <AdminSidebar />
-          </div>
-          <div className="md:col-span-5">
-        <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div className="grid grid-cols-1 gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-[#8B000F]">
-              Admin Dashboard
-            </h1>
-            <p className="text-sm text-black/90 mt-1">
-              Overview of platform activity and management tools
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search users or vendors"
-              className="px-4 py-2 rounded-lg border w-72 md:w-96"
-            />
-            <button className="px-4 py-2 bg-[#8B000F] text-white rounded">
-              Create Report
-            </button>
-            <button className="px-4 py-2 bg-white border border-gray-200 rounded">
-              Export CSV
-            </button>
-            <button
-              type="button"
-              onClick={async () => {
-                try {
-                  await fetch("/api/admin/logout", { method: "POST" });
-                  window.location.href = "/admin/login";
-                } catch (e) {
-                  console.error("Logout failed", e);
-                }
-              }}
-              className="px-4 py-2 bg-white border border-gray-200 rounded ml-2"
-            >
-              Sign out
-            </button>
-          </div>
-        </header>
-
-        <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow p-5 flex flex-col">
-            <div className="text-sm text-black/90">Total Vendors</div>
-            <div className="text-2xl font-bold text-black mt-2">
-              {users.filter((u) => u.role === "Vendor").length}
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-5 flex flex-col">
-            <div className="text-sm text-black/90">Total Customers</div>
-            <div className="text-2xl font-bold text-black mt-2">
-              {users.filter((u) => u.role === "Customer").length}
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-5 flex flex-col">
-            <div className="text-sm text-black/90">Bookings (30d)</div>
-            <div className="text-2xl font-bold text-black mt-2">
-              {bookings.length}
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-5 flex flex-col">
-            <div className="text-sm text-black/90">Revenue (est.)</div>
-            <div className="text-2xl font-bold text-black mt-2">₹3,45,000</div>
-          </div>
-        </section>
-
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-black">Recent Bookings</h3>
-              <div className="text-sm text-black/80">
-                Latest activity across the platform
+            <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-[#8B000F]">
+                  Admin Dashboard
+                </h1>
+                <p className="text-sm text-black/90 mt-1">
+                  Overview of platform activity and management tools
+                </p>
               </div>
-            </div>
-            <div className="h-48 mb-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={bookingsChartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="amount" fill="#8B000F" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="divide-y">
-              {bookings.map((b) => (
-                <div
-                  key={b.id}
-                  className="py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+              <div className="flex items-center gap-3">
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search users or vendors"
+                  className="px-4 py-2 rounded-lg border w-72 md:w-96"
+                />
+                <button
+                  type="button"
+                  onClick={() => alert("Create report — demo only")}
+                  className="px-4 py-2 bg-[#8B000F] text-white rounded"
                 >
-                  <div>
-                    <div className="font-semibold text-black">{b.customer}</div>
-                    <div className="text-sm text-black/90">
-                      {b.vendor} • {b.date}
-                    </div>
-                  </div>
-                  <div className="mt-3 sm:mt-0 flex items-center gap-3">
-                    <div
-                      className={`px-3 py-1 rounded-full text-white font-medium ${
-                        b.status === "Confirmed"
-                          ? "bg-green-600"
-                          : b.status === "Pending"
-                          ? "bg-yellow-500"
-                          : "bg-blue-600"
-                      }`}
-                    >
-                      {b.status}
-                    </div>
-                    <div className="text-sm text-black">{b.amount}</div>
-                    <button className="px-3 py-1 bg-white border border-gray-200 rounded">
-                      View
-                    </button>
+                  Create Report
+                </button>
+                <button
+                  type="button"
+                  onClick={downloadBookingsCSV}
+                  className="px-4 py-2 bg-white border border-gray-200 rounded"
+                >
+                  Export CSV
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await fetch("/api/admin/logout", { method: "POST" });
+                      window.location.href = "/auth";
+                    } catch (e) {
+                      console.error("Logout failed", e);
+                    }
+                  }}
+                  className="px-4 py-2 bg-white border border-gray-200 rounded ml-2"
+                >
+                  Sign out
+                </button>
+              </div>
+            </header>
+
+            <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-white rounded-lg shadow p-5 flex flex-col">
+                <div className="text-sm text-black/90">Total Vendors</div>
+                <div className="text-2xl font-bold text-black mt-2">
+                  {users.filter((u) => u.role === "Vendor").length}
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-5 flex flex-col">
+                <div className="text-sm text-black/90">Total Customers</div>
+                <div className="text-2xl font-bold text-black mt-2">
+                  {users.filter((u) => u.role === "Customer").length}
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-5 flex flex-col">
+                <div className="text-sm text-black/90">Bookings (30d)</div>
+                <div className="text-2xl font-bold text-black mt-2">
+                  {bookings.length}
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-5 flex flex-col">
+                <div className="text-sm text-black/90">Revenue (est.)</div>
+                <div className="text-2xl font-bold text-black mt-2">
+                  ₹3,45,000
+                </div>
+              </div>
+            </section>
+
+            <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 bg-white rounded-lg shadow p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-black">
+                    Recent Bookings
+                  </h3>
+                  <div className="text-sm text-black/80">
+                    Latest activity across the platform
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-bold text-black mb-3">Users</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="text-sm text-black/90 border-b">
-                    <th className="py-2">Name</th>
-                    <th className="py-2">Role</th>
-                    <th className="py-2">Email</th>
-                    <th className="py-2">Joined</th>
-                    <th className="py-2">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredUsers.map((u) => (
-                    <tr key={u.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 text-black font-medium">{u.name}</td>
-                      <td className="py-3 text-black">{u.role}</td>
-                      <td className="py-3 text-black">{u.email}</td>
-                      <td className="py-3 text-black">{u.joined}</td>
-                      <td className="py-3">
-                        <button className="px-3 py-1 bg-[#8B000F] text-white rounded">
-                          Manage
+                <div className="h-48 mb-4">
+                  <ResponsiveContainer width="100%" height={200}>
+                    <BarChart
+                      data={bookingsChartData}
+                      margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                    >
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="amount" fill="#8B000F" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="divide-y">
+                  {bookings.map((b) => (
+                    <div
+                      key={b.id}
+                      className="py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div>
+                        <div className="font-semibold text-black">
+                          {b.customer}
+                        </div>
+                        <div className="text-sm text-black/90">
+                          {b.vendor} • {b.date}
+                        </div>
+                      </div>
+                      <div className="mt-3 sm:mt-0 flex items-center gap-3">
+                        <div
+                          className={`px-3 py-1 rounded-full text-white font-medium ${
+                            b.status === "Confirmed"
+                              ? "bg-green-600"
+                              : b.status === "Pending"
+                              ? "bg-yellow-500"
+                              : "bg-blue-600"
+                          }`}
+                        >
+                          {b.status}
+                        </div>
+                        <div className="text-sm text-black">{b.amount}</div>
+                        <button
+                          type="button"
+                          className="px-3 py-1 bg-white border border-gray-200 rounded"
+                        >
+                          View
                         </button>
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="mt-6">
-              <h4 className="text-sm font-medium mb-2">Vendors distribution</h4>
-              <div className="w-full h-36">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie data={vendorPie} dataKey="value" nameKey="name" outerRadius={60} fill="#8884d8">
-                      {vendorPie.map((entry, idx) => (
-                        <Cell key={`cell-${idx}`} fill={["#8B000F", "#FF6F3C", "#FFD1B3"][idx % 3]} />
-                      ))}
-                    </Pie>
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        <footer className="mt-8 text-sm text-black/80">
-          Updated: {new Date().toLocaleString()}
-        </footer>
+              <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-lg font-bold text-black mb-3">Users</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="text-sm text-black/90 border-b">
+                        <th className="py-2">Name</th>
+                        <th className="py-2">Role</th>
+                        <th className="py-2">Email</th>
+                        <th className="py-2">Joined</th>
+                        <th className="py-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredUsers.map((u) => (
+                        <tr key={u.id} className="border-b hover:bg-gray-50">
+                          <td className="py-3 text-black font-medium">
+                            {u.name}
+                          </td>
+                          <td className="py-3 text-black">{u.role}</td>
+                          <td className="py-3 text-black">{u.email}</td>
+                          <td className="py-3 text-black">{u.joined}</td>
+                          <td className="py-3">
+                            <button
+                              type="button"
+                              className="px-3 py-1 bg-[#8B000F] text-white rounded"
+                            >
+                              Manage
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-6">
+                  <h4 className="text-sm font-medium mb-2">
+                    Vendors distribution
+                  </h4>
+                  <div className="w-full h-36">
+                    <ResponsiveContainer width="100%" height={180}>
+                      <PieChart>
+                        <Pie
+                          data={vendorPie}
+                          dataKey="value"
+                          nameKey="name"
+                          outerRadius={60}
+                          fill="#8884d8"
+                        >
+                          {vendorPie.map((entry, idx) => (
+                            <Cell
+                              key={`cell-${idx}`}
+                              fill={["#8B000F", "#FF6F3C", "#FFD1B3"][idx % 3]}
+                            />
+                          ))}
+                        </Pie>
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <footer className="mt-8 text-sm text-black/80">
+              Updated: {new Date().toLocaleString()}
+            </footer>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     </div>
   );
 }

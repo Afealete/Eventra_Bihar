@@ -47,14 +47,19 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
   const handleGoogleLogin = async () => {
     setFirebaseError("");
     if (role === "admin") {
-      setFirebaseError("Use the admin sign-in page at /admin/login for admin access.");
+      setFirebaseError(
+        "Use the admin sign-in page at /admin/login for admin access."
+      );
       return;
     }
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (err: any) {
       (await import("../../../lib/logger")).error("Google login error:", err);
-      setFirebaseError((err?.code ? `${err.code}: ` : "") + (err?.message || "Google login failed"));
+      setFirebaseError(
+        (err?.code ? `${err.code}: ` : "") +
+          (err?.message || "Google login failed")
+      );
     }
   };
 
@@ -65,16 +70,22 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
       // through the server-side admin endpoint so Firebase isn't used.
       // This handles cases where role wasn't switched to "admin" in the UI.
       const ADMIN_EMAIL_FALLBACK = "admin@eventra.com";
-      const isAdminEmail = (values.email || "").toLowerCase() === ADMIN_EMAIL_FALLBACK;
+      const isAdminEmail =
+        (values.email || "").toLowerCase() === ADMIN_EMAIL_FALLBACK;
       if (isAdminEmail) {
         if (mode !== "login") {
-          setFirebaseError("Admin account must be created on the server. Use /admin/login");
+          setFirebaseError(
+            "Admin account must be created on the server. Use /admin/login"
+          );
           return;
         }
         const resp = await fetch("/api/admin/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: values.email, password: values.password }),
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
         });
         const data = await resp.json().catch(() => ({}));
         if (!resp.ok) {
@@ -123,13 +134,16 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
     <AuthCard
       title={mode === "login" ? "Welcome Back" : "Create your account"}
       subtitle={
-        mode === "login" ? "Sign in to continue to Eventra" : "Set up your Eventra account"
+        mode === "login"
+          ? "Sign in to continue to Eventra"
+          : "Set up your Eventra account"
       }
     >
       <div className="flex items-center justify-between mb-6">
         <div></div>
         <div className="flex gap-2 border rounded-lg p-1">
           <button
+            type="button"
             onClick={() => setMode("login")}
             className={`px-3 py-1 rounded-lg ${
               mode === "login" ? "bg-[#6b1839] text-white" : "text-black/80"
@@ -138,6 +152,7 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
             Login
           </button>
           <button
+            type="button"
             onClick={() => setMode("signup")}
             className={`px-3 py-1 rounded-lg ${
               mode === "signup" ? "bg-[#6b1839] text-white" : "text-black/80"
@@ -149,14 +164,19 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
       </div>
 
       <div className="mb-4">
-        <div className="flex items-center gap-2 text-sm text-black/90 mb-3">Role:</div>
+        <div className="flex items-center gap-2 text-sm text-black/90 mb-3">
+          Role:
+        </div>
         <div className="flex gap-2">
           {(["customer", "vendor", "admin"] as const).map((r) => (
             <button
+              type="button"
               key={r}
               onClick={() => setRole(r)}
               className={`px-3 py-2 rounded-lg text-sm border ${
-                role === r ? "bg-[#6b1839] text-white border-[#6b1839]" : "bg-white text-black/90"
+                role === r
+                  ? "bg-[#6b1839] text-white border-[#6b1839]"
+                  : "bg-white text-black/90"
               }`}
             >
               {r.charAt(0).toUpperCase() + r.slice(1)}
@@ -167,6 +187,7 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
 
       <div className="mb-4">
         <button
+          type="button"
           onClick={handleGoogleLogin}
           className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 rounded-lg py-3 hover:shadow-sm"
         >
@@ -197,8 +218,6 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
         </button>
       </div>
 
-      {firebaseError && <div className="text-red-500 text-sm mb-3">{firebaseError}</div>}
-
       <Formik
         initialValues={{
           mode,
@@ -220,7 +239,11 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
                   placeholder="Full name"
                   className="w-full px-4 py-3 border rounded-lg bg-gray-50"
                 />
-                <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-1" />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
               </div>
             )}
 
@@ -231,7 +254,11 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
                 placeholder="Email address"
                 className="w-full px-4 py-3 border rounded-lg bg-gray-50"
               />
-              <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
             </div>
 
             <div>
@@ -241,7 +268,11 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
                 placeholder="Password"
                 className="w-full px-4 py-3 border rounded-lg bg-gray-50"
               />
-              <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
             </div>
 
             {mode === "signup" && (
@@ -252,7 +283,11 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
                   placeholder="Confirm password"
                   className="w-full px-4 py-3 border rounded-lg bg-gray-50"
                 />
-                <ErrorMessage name="confirm" component="div" className="text-red-500 text-sm mt-1" />
+                <ErrorMessage
+                  name="confirm"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
               </div>
             )}
 
@@ -260,13 +295,27 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
               <div className="text-sm text-black/80">
                 Role: <strong className="text-black">{role}</strong>
               </div>
-              <button type="button" onClick={() => router.push("/auth/forgot")} className="text-sm text-[#8B000F]">
+              <button
+                type="button"
+                onClick={() => router.push("/auth/forgot")}
+                className="text-sm text-[#8B000F]"
+              >
                 Forgot password?
               </button>
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="w-full bg-[#8B000F] text-white py-3 rounded-lg font-semibold hover:bg-[#6b000f] disabled:opacity-60">
-              {isSubmitting ? (mode === "login" ? "Signing in..." : "Creating...") : mode === "login" ? "Sign in" : "Create account"}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-[#8B000F] text-white py-3 rounded-lg font-semibold hover:bg-[#6b000f] disabled:opacity-60"
+            >
+              {isSubmitting
+                ? mode === "login"
+                  ? "Signing in..."
+                  : "Creating..."
+                : mode === "login"
+                ? "Sign in"
+                : "Create account"}
             </button>
           </Form>
         )}
@@ -275,15 +324,23 @@ export default function CustomerAuth({ defaultMode }: AuthProps) {
       <div className="mt-6 text-center text-sm text-black/80">
         {mode === "login" ? (
           <>
-            Don’t have an account?{' '}
-            <button onClick={() => setMode("signup")} className="text-[#8B000F] font-medium">
+            Don't have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setMode("signup")}
+              className="text-[#8B000F] font-medium"
+            >
               Sign up
             </button>
           </>
         ) : (
           <>
-            Already have an account?{' '}
-            <button onClick={() => setMode("login")} className="text-[#8B000F] font-medium">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setMode("login")}
+              className="text-[#8B000F] font-medium"
+            >
               Sign in
             </button>
           </>

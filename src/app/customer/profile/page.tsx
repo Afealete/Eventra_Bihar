@@ -112,7 +112,10 @@ export default function CustomerProfile() {
                       >
                         {b.status}
                       </div>
-                      <button className="px-3 py-1 bg-white border rounded">
+                      <button
+                        type="button"
+                        className="px-3 py-1 bg-white border rounded"
+                      >
                         View Details
                       </button>
                     </div>

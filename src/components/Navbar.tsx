@@ -20,7 +20,10 @@ const Navbar: React.FC<NavbarProps> = ({ forceVisible = false }) => {
   const pathname = usePathname();
 
   // Hide Navbar on vendor/admin dashboards for a focused workspace
-  if (!forceVisible && (pathname?.startsWith("/vendor") || pathname?.startsWith("/admin"))) {
+  if (
+    !forceVisible &&
+    (pathname?.startsWith("/vendor") || pathname?.startsWith("/admin"))
+  ) {
     return null;
   }
 
@@ -148,6 +151,7 @@ const Navbar: React.FC<NavbarProps> = ({ forceVisible = false }) => {
           </Link>
           {user ? (
             <button
+              type="button"
               className={linkClass}
               onClick={() => {
                 setMenuOpen(false);

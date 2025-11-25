@@ -19,7 +19,7 @@ const data = [
 export default function ExampleChart() {
   return (
     <div className="w-full h-64">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height={240}>
         <LineChart
           data={data}
           margin={{ top: 20, right: 30, left: 0, bottom: 0 }}

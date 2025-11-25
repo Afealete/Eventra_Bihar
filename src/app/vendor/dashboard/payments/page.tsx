@@ -114,6 +114,7 @@ export default function VendorPayments() {
                 <option value="pending">Pending</option>
               </select>
               <button
+                type="button"
                 onClick={requestPayout}
                 className="px-4 py-2 bg-[#8B000F] text-white rounded-md"
               >

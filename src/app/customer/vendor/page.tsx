@@ -1,5 +1,6 @@
 "use client";
 import { Suspense } from "react";
+import { useRouter } from "next/navigation";
 // Customer Vendor Detail page moved from app/vendor/page.tsx
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -52,7 +53,6 @@ const VENDORS = [
   },
 ];
 
-
 // ...existing code...
 
 function VendorContent() {
@@ -60,6 +60,7 @@ function VendorContent() {
   const idParam = searchParams?.get("id");
   const vendorId = idParam ? parseInt(idParam, 10) : 1;
   const vendor = VENDORS.find((v) => v.id === vendorId) || VENDORS[0];
+  const router = useRouter();
 
   return (
     <div className="bg-white">
@@ -89,7 +90,11 @@ function VendorContent() {
             <div className="mb-2 text-yellow-600 font-semibold">
               ★ {vendor.rating} (reviews)
             </div>
-            <button className="bg-[#8B000F] text-white px-8 py-3 rounded-lg font-bold text-lg mt-4 shadow border-2 border-[#8B000F]">
+            <button
+              type="button"
+              onClick={() => router.push(`/customer/checkout?v=${vendor.id}`)}
+              className="bg-[#8B000F] text-white px-8 py-3 rounded-lg font-bold text-lg mt-4 shadow border-2 border-[#8B000F]"
+            >
               Book Now
             </button>
           </div>

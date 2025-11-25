@@ -116,7 +116,10 @@ export default function CustomerHome() {
               className="flex-1 px-4 py-3 border-2 border-[var(--color-crimson)] rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-crimson)] text-lg bg-white/80 placeholder:text-[var(--color-crimson)]"
             />
             <Link href="/services">
-              <button className="bg-[var(--color-crimson)] text-white px-8 py-3 rounded-r-lg font-bold text-lg border-2 border-[var(--color-crimson)] w-full sm:w-auto mt-2 sm:mt-0 shadow">
+              <button
+                type="button"
+                className="bg-[var(--color-crimson)] text-white px-8 py-3 rounded-r-lg font-bold text-lg border-2 border-[var(--color-crimson)] w-full sm:w-auto mt-2 sm:mt-0 shadow"
+              >
                 Search
               </button>
             </Link>

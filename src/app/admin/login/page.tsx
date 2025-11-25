@@ -31,7 +31,10 @@ export default function AdminLogin() {
   };
 
   return (
-    <AuthCard title="Admin Sign in" subtitle="Use admin@eventra.com / admin123 (or set env vars)">
+    <AuthCard
+      title="Admin Sign in"
+      subtitle="Use admin@eventra.com / admin123 (or set env vars)"
+    >
       {error && <div className="text-red-500 text-sm mb-3">{error}</div>}
       <form onSubmit={submit} className="space-y-3">
         <input
@@ -47,7 +50,11 @@ export default function AdminLogin() {
           type="password"
           className="w-full px-3 py-2 border rounded"
         />
-        <button type="submit" disabled={loading} className="w-full bg-[#8B000F] text-white py-2 rounded">
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-[#8B000F] text-white py-2 rounded"
+        >
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>

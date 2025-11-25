@@ -59,6 +59,7 @@ export default function VendorProfile() {
                     className="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 border-white object-cover shadow-xl"
                   />
                   <button
+                    type="button"
                     className="absolute -right-2 -bottom-2 bg-white rounded-full p-1 shadow"
                     onClick={() => {
                       setShowModal(true);
@@ -113,12 +114,17 @@ export default function VendorProfile() {
                   <h2 className="text-xl font-bold text-black">About</h2>
                   <div>
                     <button
+                      type="button"
                       className="bg-[#FF6F3C] text-white px-4 py-2 rounded-md mr-2"
                       onClick={() => setShowModal(true)}
                     >
                       Edit Profile
                     </button>
-                    <button className="bg-white border border-gray-200 text-black px-4 py-2 rounded-md">
+                    <button
+                      type="button"
+                      className="bg-white border border-gray-200 text-black px-4 py-2 rounded-md"
+                      onClick={() => alert("Open public profile — demo")}
+                    >
                       View Public
                     </button>
                   </div>
@@ -146,16 +152,28 @@ export default function VendorProfile() {
               </div>
 
               <div className="md:col-span-1">
-            <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl md:w-3/5 p-6 z-10">
+                <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl md:w-3/5 p-6 z-10">
                   <div className="text-sm text-black/90">Quick Actions</div>
                   <div className="mt-3 flex flex-col gap-3">
-                    <button className="px-3 py-2 bg-[#8B000F] text-white rounded">
+                    <button
+                      type="button"
+                      className="px-3 py-2 bg-[#8B000F] text-white rounded"
+                      onClick={() => alert("Create Offer — demo")}
+                    >
                       Create Offer
                     </button>
-                    <button className="px-3 py-2 bg-white border border-gray-200 text-black rounded">
+                    <button
+                      type="button"
+                      className="px-3 py-2 bg-white border border-gray-200 text-black rounded"
+                      onClick={() => alert("Message Customer — demo")}
+                    >
                       Message Customer
                     </button>
-                    <button className="px-3 py-2 bg-white border border-gray-200 text-black rounded">
+                    <button
+                      type="button"
+                      className="px-3 py-2 bg-white border border-gray-200 text-black rounded"
+                      onClick={() => alert("Manage Availability — demo")}
+                    >
                       Manage Availability
                     </button>
                   </div>
@@ -176,6 +194,7 @@ export default function VendorProfile() {
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-black">Edit Profile</h3>
                 <button
+                  type="button"
                   onClick={() => setShowModal(false)}
                   className="text-black/80"
                 >
