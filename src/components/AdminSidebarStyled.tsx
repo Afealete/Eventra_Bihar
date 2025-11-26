@@ -23,10 +23,16 @@ export default function AdminSidebarStyled() {
 
   return (
     <aside
-      className={`h-full ${collapsed ? "w-20" : "w-64"} bg-[#8B000F] text-white flex flex-col py-4 px-3 md:px-4 shadow-lg transition-width duration-200 relative`}
+      className={`h-full ${
+        collapsed ? "w-20" : "w-64"
+      } bg-[#8B000F] text-white flex flex-col py-4 px-3 md:px-4 shadow-lg transition-width duration-200 relative`}
     >
       <div className="flex items-center justify-between px-2 mb-6">
-        <div className={`font-extrabold text-lg ${collapsed ? "opacity-0 w-0 overflow-hidden" : ""}`}>
+        <div
+          className={`font-extrabold text-lg ${
+            collapsed ? "opacity-0 w-0 overflow-hidden" : ""
+          }`}
+        >
           Admin Panel
         </div>
         <button
@@ -47,7 +53,9 @@ export default function AdminSidebarStyled() {
               key={it.href}
               href={it.href}
               className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-white ${
-                active ? "bg-white text-[#8B000F]" : "text-white hover:bg-white/20"
+                active
+                  ? "bg-white text-[#8B000F]"
+                  : "text-white hover:bg-white/20"
               }`}
             >
               <span className="text-xl">{it.icon}</span>

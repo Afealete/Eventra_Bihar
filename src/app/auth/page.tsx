@@ -1,4 +1,4 @@
-import CustomerAuth from "../customer/auth/page";
+import CustomerAuth from "../../components/CustomerAuth";
 
 export default function AuthPage() {
   return (

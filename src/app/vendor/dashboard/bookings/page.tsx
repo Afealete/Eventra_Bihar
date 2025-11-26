@@ -92,9 +92,9 @@ export default function VendorBookings() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <VendorSidebar />
-      <main className="flex-1 p-10">
+      <main className="flex-1 p-10 pt-20 md:pt-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
             <h1 className="text-3xl font-extrabold text-[#8B000F]">Bookings</h1>

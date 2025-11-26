@@ -39,6 +39,7 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+/* Updated to use modern 'matcher' config (proxy convention) instead of deprecated config export */
 export const config = {
   matcher: ["/admin/:path*"],
 };

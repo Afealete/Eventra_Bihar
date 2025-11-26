@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ forceVisible = false }) => {
         </svg>
       </div>
       {/* Desktop Links */}
-      <div className="hidden md:flex space-x-2">
+      <div className="hidden md:flex items-center space-x-2">
         <Link href="/" className={linkClass}>
           Home
         </Link>
@@ -79,6 +79,11 @@ const Navbar: React.FC<NavbarProps> = ({ forceVisible = false }) => {
         <Link href="/profile" className={linkClass}>
           Profile
         </Link>
+        {user && (
+          <span className="text-sm text-black/80 px-2">
+            {user.displayName || user.email?.split("@")[0] || "User"}
+          </span>
+        )}
         {user ? (
           <button type="button" onClick={handleSignOut} className={linkClass}>
             Sign Out
@@ -90,9 +95,6 @@ const Navbar: React.FC<NavbarProps> = ({ forceVisible = false }) => {
         )}
         <Link href="/signup" className={linkClass}>
           signup
-        </Link>
-        <Link href="/checkout" className={linkClass}>
-          Checkout
         </Link>
       </div>
       {/* Hamburger Icon */}
@@ -149,6 +151,11 @@ const Navbar: React.FC<NavbarProps> = ({ forceVisible = false }) => {
           >
             Profile
           </Link>
+          {user && (
+            <span className="text-sm text-black/80 px-2 py-2">
+              {user.displayName || user.email?.split("@")[0] || "User"}
+            </span>
+          )}
           {user ? (
             <button
               type="button"

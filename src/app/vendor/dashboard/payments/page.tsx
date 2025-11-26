@@ -84,9 +84,9 @@ export default function VendorPayments() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <VendorSidebar />
-      <main className="flex-1 p-6 md:p-10">
+      <main className="flex-1 p-6 md:p-10 pt-16 md:pt-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div>

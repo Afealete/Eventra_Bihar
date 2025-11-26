@@ -22,6 +22,10 @@ export default function VendorAuth() {
       await signInWithPopup(auth, googleProvider);
       router.replace("/vendor/dashboard");
     } catch (err: any) {
+      // Silently ignore when user closes the popup — it's not an error
+      if (err?.code === "auth/popup-closed-by-user") {
+        return;
+      }
       (await import("../../../lib/logger")).error("Google login error:", err);
       setFirebaseError(
         (err?.code ? `${err.code}: ` : "") +

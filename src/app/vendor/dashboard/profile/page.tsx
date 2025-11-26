@@ -9,8 +9,8 @@ export default function VendorProfile() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
   const [profile, setProfile] = useState({
-    name: "Dream Weddings Photography",
-    email: "vendor@example.com",
+    name: "",
+    email: "",
     phone: "9876543210",
     price: "₹20,000+",
     about: "Top-rated wedding photographer in Bihar.",
@@ -26,6 +26,12 @@ export default function VendorProfile() {
   useEffect(() => {
     if (!loading && !user) {
       router.replace("/auth");
+    } else if (user) {
+      setProfile((prev) => ({
+        ...prev,
+        name: user.displayName || "Vendor",
+        email: user.email || "",
+      }));
     }
   }, [user, loading, router]);
 
@@ -38,9 +44,9 @@ export default function VendorProfile() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <VendorSidebar />
-      <main className="flex-1">
+      <main className="flex-1 pt-16 md:pt-0">
         <div
           className="bg-cover bg-center h-40 md:h-56"
           style={{ backgroundImage: `url('/wedding-cover.jpg')` }}

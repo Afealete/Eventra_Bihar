@@ -46,23 +46,29 @@ export default function VendorDashboard() {
     );
   if (!user) return null;
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <VendorSidebar />
       <div className="flex-1">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="max-w-7xl mx-auto px-6 py-8 pt-16 md:pt-0">
           <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div>
               <h1 className="text-3xl md:text-4xl font-extrabold text-[#8B000F]">
                 Vendor Dashboard
               </h1>
-              <p className="text-sm text-black/90 mt-1">Overview of your vendor activity</p>
+              <p className="text-sm text-black/90 mt-1">
+                Overview of your vendor activity
+              </p>
             </div>
             <div className="flex items-center gap-3">
               <input
                 placeholder="Search bookings or customers"
                 className="px-4 py-2 rounded-lg border w-72 md:w-96"
               />
-              <button type="button" onClick={() => alert('Download report — demo')} className="px-4 py-2 bg-[#8B000F] text-white rounded">
+              <button
+                type="button"
+                onClick={() => alert("Download report — demo")}
+                className="px-4 py-2 bg-[#8B000F] text-white rounded"
+              >
                 Export
               </button>
             </div>
@@ -89,9 +95,11 @@ export default function VendorDashboard() {
 
           <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             <div className="lg:col-span-2 bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-bold text-black mb-4">Monthly Revenue</h3>
-              <div className="h-48">
-                <ResponsiveContainer width="100%" height={200}>
+              <h3 className="text-lg font-bold text-black mb-4">
+                Monthly Revenue
+              </h3>
+              <div className="h-48 md:h-56">
+                <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={[
                       { month: "Oct", revenue: 18000 },
@@ -110,9 +118,11 @@ export default function VendorDashboard() {
             </div>
 
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-bold text-black mb-3">Booking Summary</h3>
-              <div className="w-full h-36">
-                <ResponsiveContainer width="100%" height={180}>
+              <h3 className="text-lg font-bold text-black mb-3">
+                Booking Summary
+              </h3>
+              <div className="w-full h-36 md:h-44">
+                <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
                       data={chartData}
@@ -122,7 +132,10 @@ export default function VendorDashboard() {
                       fill="#8884d8"
                     >
                       {chartData.map((entry, idx) => (
-                        <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
+                        <Cell
+                          key={`cell-${idx}`}
+                          fill={COLORS[idx % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                   </PieChart>
@@ -132,7 +145,9 @@ export default function VendorDashboard() {
           </section>
 
           <section className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-bold text-black mb-4">Recent Bookings</h3>
+            <h3 className="text-lg font-bold text-black mb-4">
+              Recent Bookings
+            </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
@@ -145,10 +160,20 @@ export default function VendorDashboard() {
                 <tbody>
                   {dummyBookings.map((b) => (
                     <tr key={b.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 text-black font-medium">{b.service}</td>
+                      <td className="py-3 text-black font-medium">
+                        {b.service}
+                      </td>
                       <td className="py-3 text-black">{b.date}</td>
                       <td className="py-3">
-                        <div className={`px-3 py-1 rounded-full text-sm ${b.status === "Confirmed" ? "bg-green-600 text-white" : b.status === "Pending" ? "bg-yellow-500 text-white" : "bg-red-600 text-white"}`}>
+                        <div
+                          className={`px-3 py-1 rounded-full text-sm ${
+                            b.status === "Confirmed"
+                              ? "bg-green-600 text-white"
+                              : b.status === "Pending"
+                              ? "bg-yellow-500 text-white"
+                              : "bg-red-600 text-white"
+                          }`}
+                        >
                           {b.status}
                         </div>
                       </td>

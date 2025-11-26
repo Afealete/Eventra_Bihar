@@ -15,13 +15,17 @@ export default function VendorDetail() {
       await signInWithPopup(auth, googleProvider);
       alert("Google login successful!");
     } catch (error: any) {
+      // Silently ignore when user closes the popup — it's not an error
+      if (error?.code === "auth/popup-closed-by-user") {
+        setGoogleLoading(false);
+        return;
+      }
       // log full error for debugging via logger
       (await import("../../lib/logger")).error("Google login error:", error);
       alert(
         (error?.code ? `${error.code}: ` : "") +
           (error?.message || "Google login failed")
       );
-    } finally {
       setGoogleLoading(false);
     }
   };

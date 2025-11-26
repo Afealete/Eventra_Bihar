@@ -5,7 +5,7 @@ import * as Yup from "yup";
 
 export default function CustomerCheckout() {
   return (
-    <div className="bg-white">
+    <div className="bg-white checkout">
       <section className="max-w-2xl mx-auto py-12 px-4">
         <h2
           className="text-4xl font-extrabold mb-8 tracking-tight"
@@ -17,14 +17,14 @@ export default function CustomerCheckout() {
           <h3 className="text-2xl font-bold mb-2" style={{ color: "#6b1839" }}>
             Booking Summary
           </h3>
-          <div className="text-black mb-1">
+          <div className="text-black mb-2 text-base font-medium">
             Service:{" "}
             <span className="font-semibold">Dream Weddings Photography</span>
           </div>
-          <div className="text-black mb-1">
+          <div className="text-black mb-2 text-base font-medium">
             Date: <span className="font-semibold">2025-12-10</span>
           </div>
-          <div className="text-black mb-1">
+          <div className="text-black mb-2 text-base font-medium">
             Price: <span className="font-semibold">₹20,000</span>
           </div>
         </div>
