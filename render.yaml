@@ -1,15 +1,13 @@
 services:
   - type: web
     name: eventra-api
+    plan: free
     runtime: node
     rootDir: backend
     buildCommand: npm install
-    startCommand: npm run start
+    startCommand: npm run db:migrate && npm run start
     healthCheckPath: /health
-    # Runs once per deployment before the web process starts. Do not run
-    # migrations from the service start command: multiple instances could
-    # otherwise race during restarts or scaling.
-    preDeployCommand: npm run db:migrate
+    autoDeployTrigger: commit
     envVars:
       - key: NODE_ENV
         value: production
@@ -50,10 +48,12 @@ services:
         sync: false
   - type: web
     name: eventra-web
+    plan: free
     runtime: node
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm run start
+    autoDeployTrigger: commit
     envVars:
       - key: NEXT_PUBLIC_API_BASE
         fromService:
@@ -75,5 +75,6 @@ services:
         sync: false
 databases:
   - name: eventra-db
+    plan: free
     databaseName: eventra
     user: eventra
