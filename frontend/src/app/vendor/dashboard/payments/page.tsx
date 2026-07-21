@@ -1,0 +1,2 @@
+import VendorSidebar from "../sidebar";
+export default function VendorPayments() { return <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row"><VendorSidebar /><main className="flex-1 p-6 pt-20 md:pt-8"><h1 className="text-3xl font-extrabold text-[#8B000F]">Payments</h1><p className="mt-4">Online payments and payouts are not enabled in this MVP. Booking prices are visible in the booking workflow.</p></main></div>; }
