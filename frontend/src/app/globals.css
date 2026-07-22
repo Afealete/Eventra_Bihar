@@ -6,6 +6,7 @@
   --color-crimson: #8B000F;
   --color-orange: #FF6F3C;
   --color-peach: #FFD1B3;
+  color-scheme: light;
 }
 
 /* Replace non-standard @theme rule with a regular class to avoid
@@ -17,17 +18,152 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-wrap: break-word;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+main,
+section,
+article,
+form,
+.flex-1,
+.grid > * {
+  min-width: 0;
+}
+
+/* Homepage hero content sits over the full-width rotating image backdrop. */
+.homepage-slider {
+  min-height: 620px;
+}
+
+.homepage-slider + section {
+  position: relative;
+  z-index: 1;
+  min-height: 620px;
+  margin-top: -620px;
+  background: transparent;
+}
+
+.homepage-slider + section > div {
+  display: flex;
+  min-height: 620px;
+  align-items: center;
+  justify-content: center;
+}
+
+.homepage-slider + section > div > div {
+  width: min(42rem, 100%);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 1.5rem;
+  background: rgb(255 255 255 / 56%);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 35%);
+  backdrop-filter: blur(2px);
+}
+
+.homepage-slider + section > div > img {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .homepage-slider,
+  .homepage-slider + section,
+  .homepage-slider + section > div {
+    min-height: 720px;
+  }
+
+  .homepage-slider + section {
+    margin-top: -720px;
+  }
+
+  .homepage-slider + section > div > div {
+    padding: 1.5rem;
+    background: rgb(255 255 255 / 82%);
+  }
+
+  .homepage-slider + section h1 {
+    font-size: clamp(2.25rem, 11vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .homepage-slider + section > div {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .homepage-slider,
+  .homepage-slider + section,
+  .homepage-slider + section > div {
+    min-height: 680px;
+  }
+
+  .homepage-slider + section {
+    margin-top: -680px;
+  }
+
+  .homepage-slider + section > div {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .homepage-slider + section h1 {
+    font-size: clamp(2.75rem, 3.2vw, 3.5rem);
+    line-height: 1.05;
+  }
+}
+
+@media (min-width: 1600px) {
+  .homepage-slider + section > div > div {
+    width: min(44rem, 42vw);
+  }
+}
+
+/* Form controls must not inherit a transparent browser/theme appearance. */
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,
+textarea {
+  max-width: 100%;
+  background-color: #ffffff;
+  color: #111827;
+  caret-color: #8b000f;
+  -webkit-text-fill-color: #111827;
+  opacity: 1;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  -webkit-text-fill-color: #4b5563;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #111827;
+  box-shadow: 0 0 0 1000px #ffffff inset;
+  caret-color: #8b000f;
 }
 
 /* Make any Tailwind 'text-gray-*' utilities more visible by forcing a darker gray.

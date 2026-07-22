@@ -23,19 +23,18 @@ export default function HeroSlider() {
   }, [index]);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
+    <div className="absolute inset-0 z-0 h-full w-full overflow-hidden" aria-hidden="true">
       {SLIDES.map((src, i) => (
         <img
           key={src}
           src={src}
-          alt="Wedding Slide"
-          className={`object-cover w-full h-full absolute top-0 left-0 transition-opacity duration-1000 ${
-            i === index ? "opacity-80" : "opacity-85"
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 motion-reduce:transition-none ${
+            i === index ? "opacity-100" : "opacity-0"
           }`}
-          style={{ zIndex: i === index ? 1 : 0 }}
         />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#8B000F]/80 to-transparent pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-black/15" />
     </div>
   );
 }
