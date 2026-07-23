@@ -61,7 +61,7 @@ export default function VendorProfile() {
 
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading profile…</div>;
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+    <div className="flex min-h-screen flex-col bg-[#fffdfc] md:flex-row">
       <VendorSidebar />
       <main className="flex-1 p-6 pt-20 md:pt-8 max-w-3xl">
         <h1 className="text-3xl font-extrabold text-[#8B000F]">Vendor Profile</h1>

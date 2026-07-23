@@ -1,4 +1,6 @@
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+const API_BASE = process.env.NODE_ENV === "production"
+  ? "/backend"
+  : (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
 
 export type Booking = {
   id: number;

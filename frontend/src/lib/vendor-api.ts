@@ -1,6 +1,8 @@
 import { Vendor, VendorService } from "./vendors";
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+const API_BASE = process.env.NODE_ENV === "production"
+  ? "/backend"
+  : (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
 
 function csrfToken() {
   return document.cookie.split("; ").find((entry) => entry.startsWith("eventra_csrf="))?.split("=")[1];

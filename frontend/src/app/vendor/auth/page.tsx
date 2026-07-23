@@ -124,7 +124,7 @@ export default function VendorAuth() {
                   <Field
                     name="name"
                     placeholder="Business name / Full name"
-                    className="w-full px-4 py-3 border rounded-lg bg-gray-50"
+                    className="w-full rounded-xl border border-[#e7d4ce] bg-white px-4 py-3 outline-none focus:border-[#8B000F] focus:ring-2 focus:ring-[#8B000F]/20"
                   />
                   <ErrorMessage
                     name="name"
@@ -139,7 +139,7 @@ export default function VendorAuth() {
                   name="email"
                   type="email"
                   placeholder="Email address"
-                  className="w-full px-4 py-3 border rounded-lg bg-gray-50"
+                  className="w-full rounded-xl border border-[#e7d4ce] bg-white px-4 py-3 outline-none focus:border-[#8B000F] focus:ring-2 focus:ring-[#8B000F]/20"
                 />
                 <ErrorMessage
                   name="email"
@@ -153,7 +153,7 @@ export default function VendorAuth() {
                   name="password"
                   type="password"
                   placeholder="Password"
-                  className="w-full px-4 py-3 border rounded-lg bg-gray-50"
+                  className="w-full rounded-xl border border-[#e7d4ce] bg-white px-4 py-3 outline-none focus:border-[#8B000F] focus:ring-2 focus:ring-[#8B000F]/20"
                 />
                 <ErrorMessage
                   name="password"
@@ -168,7 +168,7 @@ export default function VendorAuth() {
                     name="confirm"
                     type="password"
                     placeholder="Confirm password"
-                    className="w-full px-4 py-3 border rounded-lg bg-gray-50"
+                    className="w-full rounded-xl border border-[#e7d4ce] bg-white px-4 py-3 outline-none focus:border-[#8B000F] focus:ring-2 focus:ring-[#8B000F]/20"
                   />
                   <ErrorMessage
                     name="confirm"

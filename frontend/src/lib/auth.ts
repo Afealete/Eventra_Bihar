@@ -1,7 +1,9 @@
 import { auth, googleProvider, signInWithPopup } from "./firebase";
 import { signOut } from "firebase/auth";
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+const API_BASE = process.env.NODE_ENV === "production"
+  ? "/backend"
+  : (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
 
 export type UserRole = "customer" | "vendor" | "admin";
 export type PublicAuthRole = Exclude<UserRole, "admin">;
